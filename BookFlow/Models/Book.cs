@@ -4,7 +4,7 @@
     {
         public string? ISBN { get; set; } // уникальный идентификатор книги
         public string? Title { get; set; } // название книги
-        public string? Author { get; set; } // автор книги
+        public string[]? Author { get; set; } // автор книги
         public string? Publisher { get; set; } // издательство книги
         public DateTime PublicationDate { get; set; } // дата публикации книги
         public string? Genre { get; set; } // жанр книги
