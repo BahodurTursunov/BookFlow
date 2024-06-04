@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookFlow.Migrations
 {
     [DbContext(typeof(BookFlowContext))]
-    [Migration("20240604062523_addedRelationBetweenModels")]
+    [Migration("20240604064125_addedRelationBetweenModels")]
     partial class addedRelationBetweenModels
     {
         /// <inheritdoc />

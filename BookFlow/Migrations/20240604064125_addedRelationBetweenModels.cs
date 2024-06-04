@@ -33,7 +33,7 @@ namespace BookFlow.Migrations
                     ISBN = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     PublicationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Genre = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Language = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
