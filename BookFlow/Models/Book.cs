@@ -12,8 +12,8 @@
         public int Pages { get; set; } // количество страниц в книге
         public double Rating { get; set; } // рейтинг книги (если есть отзывы пользователей)
         public string? ImageUrl { get; set; } // ссылка на изображение обложки книги
-        public ICollection<BookCategory> BookCategories { get; set; } = new List<BookCategory>();
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
 
-        public ICollection<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();
+        public ICollection<Author> Authors { get; set; } = new List<Author>();
     }
 }

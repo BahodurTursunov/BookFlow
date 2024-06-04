@@ -3,6 +3,6 @@
     public class Category : BaseEntity
     {
         public string? Name { get; set; }
-        public ICollection<BookCategory>? BookCategories { get; set; } = new List<BookCategory>();
+        public ICollection<Book>? Books { get; set; } = new List<Book>();
     }
 }

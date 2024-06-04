@@ -1,6 +1,6 @@
 ﻿namespace BookFlow.Models
 {
-    public class BookCategory
+    public class BookCategory : BaseEntity
     {
         public int BookId { get; set; }
         public int CategoryId { get; set; }
