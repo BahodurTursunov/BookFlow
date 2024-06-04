@@ -41,19 +41,14 @@ namespace BookFlow.Services
             {
                 _item.ISBN = item.ISBN;
                 _item.Title = item.Title;
-                _item.AuthorId = item.AuthorId;
-                _item.Publisher = item.Publisher;
                 _item.PublicationDate = item.PublicationDate;
                 _item.Genre = item.Genre;
                 _item.Description = item.Description;
                 _item.Language = item.Language;
                 _item.Price = item.Price;
                 _item.Pages = item.Pages;
-                _item.CoverType = item.CoverType;
-                _item.Weight = item.Weight;
                 _item.Rating = item.Rating;
                 _item.ImageUrl = item.ImageUrl;
-                _item.CategoryId = item.CategoryId;
 
                 return await _repository.UpdateAsync(_item);
             }
