@@ -8,8 +8,14 @@ namespace BookFlow.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<BookAuthor> builder)
         {
+            builder.HasKey(fk => new { fk.BookId, fk.AuthorId });
+
             builder
-                .HasKey(ba => new { ba.AuthorId, ba.BookId });
+                .HasOne(ba => ba.Book)
+                .WithMany(b => b.BookAuthors)
+                .HasForeignKey(ba => ba.BookId);
+
+
         }
     }
 }

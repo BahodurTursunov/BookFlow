@@ -3,8 +3,8 @@
     public class BookCategory
     {
         public int BookId { get; set; }
-        public Book? Books { get; set; }
         public int CategoryId { get; set; }
-        public Category? Categories { get; set; }
+        public Book? Book { get; set; }
+        public Category? Category { get; set; }
     }
 }
