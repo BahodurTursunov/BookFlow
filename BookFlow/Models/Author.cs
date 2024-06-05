@@ -1,9 +1,16 @@
-﻿namespace BookFlow.Models
+﻿using System.Text.Json.Serialization;
+
+namespace BookFlow.Models
 {
     public class Author : BaseEntity
     {
         public string? Name { get; set; }
         public string? Biography { get; set; }
-        public ICollection<Book>? Books { get; set; } = new List<Book>();
+
+        [JsonIgnore]
+        public List<BookAuthor> BookAuthors { get; set; } = [];
+
+        [JsonIgnore]
+        public List<Book> Books { get; set; } = [];
     }
 }

@@ -6,29 +6,29 @@ namespace BookFlow.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthorController(IAuthorService service) : ControllerBase
+    public class CategoryController(ICategoryService service) : ControllerBase
     {
-        readonly IAuthorService _service = service;
+        readonly ICategoryService _service = service;
 
         [HttpGet("AllItems")]
-        public IQueryable<Author> Get()
+        public IQueryable<Category> Get()
         {
             return _service.GetAll();
         }
 
         [HttpGet("GetById")]
-        public async Task<Author> Get(int id)
+        public async Task<Category> Get(int id)
         {
             return await _service.GetById(id);
         }
 
         [HttpPost("Create")]
-        public async Task<Author> Create(Author item)
+        public async Task<Category> Create(Category item)
         {
             return await _service.Create(item);
         }
         [HttpPut("Update")]
-        public async Task<bool> Put([FromQuery] int id, [FromBody] Author item)
+        public async Task<bool> Put([FromQuery] int id, [FromBody] Category item)
         {
             return await _service.Update(id, item);
         }
@@ -40,4 +40,3 @@ namespace BookFlow.Controllers
         }
     }
 }
-

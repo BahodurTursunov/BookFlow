@@ -7,6 +7,7 @@ namespace BookFlow.Infrastructure
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<BookAuthor> BookAuthors { get; set; }
         public DbSet<Category> Categories { get; set; }
 
         public BookFlowContext(DbContextOptions options) : base(options)
@@ -15,16 +16,64 @@ namespace BookFlow.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder
-                        .Entity<Book>()
-                        .HasMany(b => b.Authors)
-                        .WithMany(a => a.Books); // Связь "многие ко многим" между Author и Book
+            //    modelBuilder.Entity<BookAuthor>()
+            //.HasKey(ba => new { ba.BookId, ba.AuthorId });
 
-            modelBuilder
-                        .Entity<Book>()
-                        .HasMany(b => b.Categories)
-                        .WithMany(c => c.Books);
+            //    modelBuilder.Entity<BookAuthor>()
+            //        .HasOne(ba => ba.Book)
+            //        .WithMany(b => b.BookAuthors)
+            //        .HasForeignKey(ba => ba.BookId);
+
+            //    modelBuilder.Entity<BookAuthor>()
+            //        .HasOne(ba => ba.Author)
+            //        .WithMany(a => a.BookAuthors)
+            //        .HasForeignKey(ba => ba.AuthorId);
+
+            //modelBuilder
+            //.Entity<Book>()
+            //.HasMany(c => c.Authors)
+            //.WithMany(s => s.Books)
+            //.UsingEntity<BookAuthor>(
+            //j => j.HasOne(pt => pt.Book)
+            //    .WithMany(t => t.BookAuthors)
+            //    .HasForeignKey(pt => pt.BookId),
+            //j => j
+            //    .HasOne(pt => pt.Author)
+            //    .WithMany(p => p.BookAuthors)
+            //    .HasForeignKey(pt => pt.AuthorId),
+            //j =>
+            //{
+            //    j.HasKey(t => new { t.BookId, t.AuthorId });
+            //    j.ToTable("BookAuthors");
+            //});
+
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Entity<Book>()
+            .HasMany(c => c.Authors)
+            .WithMany(c => c.Books)
+            .UsingEntity<BookAuthor>();
+
+            modelBuilder.Entity<Category>()
+                .HasKey(pk => pk.Id);
+
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Books)
+                .WithOne(p => p.Category)
+                .HasForeignKey(fk => fk.CategoryId);
+
+            modelBuilder.Entity<BookAuthor>()
+                .HasKey(ba => new { ba.BookId, ba.AuthorId });
+
+            modelBuilder.Entity<BookAuthor>()
+                .HasOne(b => b.Book)
+                .WithMany(a => a.BookAuthors)
+                .HasForeignKey(fk => fk.BookId);
+
+            modelBuilder.Entity<BookAuthor>()
+                .HasOne(ba => ba.Author)
+                .WithMany(a => a.BookAuthors)
+                .HasForeignKey(ba => ba.AuthorId);
         }
     }
 }

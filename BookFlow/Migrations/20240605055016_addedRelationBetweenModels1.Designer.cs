@@ -3,6 +3,7 @@ using BookFlow.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookFlow.Migrations
 {
     [DbContext(typeof(BookFlowContext))]
-    partial class BookFlowContextModelSnapshot : ModelSnapshot
+    [Migration("20240605055016_addedRelationBetweenModels1")]
+    partial class addedRelationBetweenModels1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,18 +84,23 @@ namespace BookFlow.Migrations
 
             modelBuilder.Entity("BookFlow.Models.BookAuthor", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.HasKey("BookId", "AuthorId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
 
                     b.ToTable("BookAuthors");
                 });

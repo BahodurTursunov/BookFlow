@@ -3,10 +3,11 @@ using BookFlow.Repository;
 
 namespace BookFlow.Services
 {
-    public class BookService(ISqlRepository<Book> repository) : IBookService
+    public class BookService(ISqlRepository<Book> repository/*, IBookAuthorService<BookAuthor> bookAuthorService*/) : IBookService
     {
-        private readonly ISqlRepository<Book> _repository = repository;
-        public async Task<Book?> CreateAsync(Book item)
+        readonly ISqlRepository<Book> _repository = repository;
+        //readonly IBookAuthorService<BookAuthor> _bookAuthorService = bookAuthorService;
+        public async Task<Book> Create(Book item)
         {
             if (!string.IsNullOrEmpty(item.Title))
             {
@@ -14,8 +15,21 @@ namespace BookFlow.Services
             }
             return item;
         }
+        public async Task<Book> Create(Book item, Author item2)
+        {
+            if (!string.IsNullOrEmpty(item.Title))
+            {
 
-        public async Task<bool> DeleteAsync(int id)
+                var book = await _repository.CreateAsync(item);
+                //var author = await _bookAuthorService.CreateAsync(ICollection<Book> item, ICollection<Author> item2);
+
+                //await _bookAuthorService.CreateAsync(book.Id, author.Id);
+                return book;
+            }
+            return item;
+        }
+
+        public async Task<bool> Delete(int id)
         {
             return await _repository.DeleteAsync(id);
         }
@@ -25,12 +39,12 @@ namespace BookFlow.Services
             return _repository.GetAll();
         }
 
-        public Task<Book?> GetByIdAsync(int id)
+        public Task<Book> GetById(int id)
         {
             return _repository.GetByIdAsync(id);
         }
 
-        public async Task<bool> UpdateAsync(int id, Book item)
+        public async Task<bool> Update(int id, Book item)
         {
             var _item = await _repository.GetByIdAsync(id);
             if (_item is null)
@@ -41,13 +55,9 @@ namespace BookFlow.Services
             {
                 _item.ISBN = item.ISBN;
                 _item.Title = item.Title;
-                _item.PublicationDate = item.PublicationDate;
                 _item.Genre = item.Genre;
                 _item.Description = item.Description;
-                _item.Language = item.Language;
                 _item.Price = item.Price;
-                _item.Pages = item.Pages;
-                _item.Rating = item.Rating;
                 _item.ImageUrl = item.ImageUrl;
 
                 return await _repository.UpdateAsync(_item);

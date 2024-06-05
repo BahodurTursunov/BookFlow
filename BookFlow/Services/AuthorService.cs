@@ -3,11 +3,11 @@ using BookFlow.Repository;
 
 namespace BookFlow.Services
 {
-    public class CategoryService(ISqlRepository<Category> repository) : ICategoryService
+    public class AuthorService(ISqlRepository<Author> repository) : IAuthorService
     {
-        private ISqlRepository<Category> _repository = repository;
+        private ISqlRepository<Author> _repository = repository;
 
-        public async Task<Category> Create(Category item)
+        public async Task<Author> Create(Author item)
         {
             if (!string.IsNullOrEmpty(item.Name))
             {
@@ -21,17 +21,17 @@ namespace BookFlow.Services
             return await _repository.DeleteAsync(id);
         }
 
-        public IQueryable<Category> GetAll()
+        public IQueryable<Author> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public Task<Category> GetById(int id)
+        public Task<Author> GetById(int id)
         {
             return _repository.GetByIdAsync(id);
         }
 
-        public async Task<bool> Update(int id, Category item)
+        public async Task<bool> Update(int id, Author item)
         {
             var _item = await _repository.GetByIdAsync(id);
             if (_item is null)
@@ -41,8 +41,8 @@ namespace BookFlow.Services
             else
             {
                 _item.Name = item.Name;
+                _item.Biography = item.Biography;
                 return await _repository.UpdateAsync(_item);
-
             }
         }
     }

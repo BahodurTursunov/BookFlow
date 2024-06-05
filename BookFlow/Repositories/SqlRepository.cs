@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookFlow.Repository
 {
-    public class SqlRepository<T>(BookFlowContext context, ILogger logger) : ISqlRepository<T> where T : BaseEntity
+    public class SqlRepository<T>(BookFlowContext context) : ISqlRepository<T> where T : BaseEntity
     {
         readonly BookFlowContext _context = context;
-        readonly ILogger _logger = logger;
         public async Task<T> CreateAsync(T item)
         {
             try
@@ -38,9 +37,9 @@ namespace BookFlow.Repository
                     await Console.Out.WriteLineAsync($"Item with ID {id} not found");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, $"Error occured while deleting item with ID {id}");
+                await Console.Out.WriteLineAsync($"Error occured while deleting item with ID {id}");
             }
             return false;
         }
@@ -50,7 +49,7 @@ namespace BookFlow.Repository
             return _context.Set<T>();
         }
 
-        public async Task<T?> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>().FirstOrDefaultAsync(w => w.Id == id);
         }
