@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BookFlow.Infrastructure;
+﻿using BookFlow.Infrastructure;
 using BookFlow.Models;
 using BookFlow.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +7,10 @@ namespace BookFlow.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BookController(IBookService service, BookFlowContext context, IMapper mapper) : ControllerBase
+    public class BookController(IBookService service, BookFlowContext context) : ControllerBase
     {
         readonly BookFlowContext _context = context;
         readonly IBookService _service = service;
-        readonly IMapper _mapper = mapper;
 
         [HttpGet("AllItems")]
         public IQueryable<Book> Get()
@@ -30,8 +28,8 @@ namespace BookFlow.Controllers
         public async Task<Book> Create([FromBody] Book item)
         {
             return await _service.Create(item);
-
         }
+
         [HttpPut("Update")]
         public async Task<bool> Put([FromQuery] int id, [FromBody] Book item)
         {

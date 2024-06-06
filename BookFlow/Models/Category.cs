@@ -8,5 +8,6 @@ namespace BookFlow.Models
 
         [JsonIgnore]
         public ICollection<Book> Books { get; set; } = new List<Book>();
+
     }
 }
