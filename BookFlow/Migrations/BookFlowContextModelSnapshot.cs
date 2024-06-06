@@ -32,10 +32,15 @@ namespace BookFlow.Migrations
                     b.Property<string>("Biography")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookId");
 
                     b.ToTable("Authors");
                 });
@@ -74,27 +79,11 @@ namespace BookFlow.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("BookFlow.Models.BookAuthor", b =>
-                {
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookId", "AuthorId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("BookAuthors");
                 });
 
             modelBuilder.Entity("BookFlow.Models.Category", b =>
@@ -113,44 +102,44 @@ namespace BookFlow.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("BookFlow.Models.Author", b =>
+                {
+                    b.HasOne("BookFlow.Models.Book", "Book")
+                        .WithMany("Authors")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("BookFlow.Models.Book", b =>
                 {
+                    b.HasOne("BookFlow.Models.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BookFlow.Models.Category", "Category")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("BookFlow.Models.BookAuthor", b =>
-                {
-                    b.HasOne("BookFlow.Models.Author", "Author")
-                        .WithMany("BookAuthors")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BookFlow.Models.Book", "Book")
-                        .WithMany("BookAuthors")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Author");
 
-                    b.Navigation("Book");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("BookFlow.Models.Author", b =>
                 {
-                    b.Navigation("BookAuthors");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("BookFlow.Models.Book", b =>
                 {
-                    b.Navigation("BookAuthors");
+                    b.Navigation("Authors");
                 });
 
             modelBuilder.Entity("BookFlow.Models.Category", b =>

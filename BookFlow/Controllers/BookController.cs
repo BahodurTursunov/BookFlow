@@ -29,21 +29,7 @@ namespace BookFlow.Controllers
         [HttpPost("Create")]
         public async Task<Book> Create([FromBody] Book item)
         {
-
-            var book = new Book
-            {
-                ISBN = item.ISBN,
-                Title = item.Title,
-                Genre = item.Genre,
-                Description = item.Description,
-                Price = item.Price,
-                ImageUrl = item.ImageUrl,
-                CategoryId = item.CategoryId,
-            };
-            _context.Books.Add(book);
-
-            await _context.SaveChangesAsync();
-            return await _service.Create(book);
+            return await _service.Create(item);
 
         }
         [HttpPut("Update")]

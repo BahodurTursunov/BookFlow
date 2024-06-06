@@ -11,13 +11,13 @@ namespace BookFlow.Models
         public decimal Price { get; set; } // цена
         public string? ImageUrl { get; set; } // ссылка на изображение обложки книги
         public int CategoryId { get; set; }
-        public Category Category { get; set; } = null!;
-        public int AuthorId { get; set; }
-        //public Author Author { get; set; } = null!;
-
 
         [JsonIgnore]
-        public List<BookAuthor> BookAuthors { get; set; } = [];
+        public Category Category { get; set; } = null!;
+        public int AuthorId { get; set; }
+
+        [JsonIgnore]
+        public Author Author { get; set; } = null!;
 
         [JsonIgnore]
         public List<Author> Authors { get; set; } = [];

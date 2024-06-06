@@ -7,8 +7,9 @@ namespace BookFlow.Models
         public string? Name { get; set; }
         public string? Biography { get; set; }
 
+        public int BookId { get; set; }
         [JsonIgnore]
-        public List<BookAuthor> BookAuthors { get; set; } = [];
+        public Book Book { get; set; } = null!;
 
         [JsonIgnore]
         public List<Book> Books { get; set; } = [];
