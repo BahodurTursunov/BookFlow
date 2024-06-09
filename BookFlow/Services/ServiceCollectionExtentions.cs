@@ -10,7 +10,6 @@ public static class ServiceCollectionExtensions
         service.AddScoped<ICategoryService, CategoryService>();
         service.AddScoped<IBookService, BookService>();
         service.AddScoped<IAuthorService, AuthorService>();
-        //service.AddScoped<IBookAuthorService, AuthorService>();
         service.AddScoped(typeof(ISqlRepository<>), typeof(SqlRepository<>));
     }
 }
