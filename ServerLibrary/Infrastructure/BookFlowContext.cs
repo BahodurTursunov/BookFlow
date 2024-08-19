@@ -1,4 +1,5 @@
-﻿using BookFlow.Models;
+﻿using BaseLibrary.Models;
+using BookFlow.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookFlow.Infrastructure
@@ -9,6 +10,9 @@ namespace BookFlow.Infrastructure
         public DbSet<Author> Authors { get; set; }
         public DbSet<BookAuthor> BookAuthors { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<SystemRole> SystemRoles { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<RefreshToken> RefreshToken { get; set; }
 
         public BookFlowContext(DbContextOptions options) : base(options)
         {
